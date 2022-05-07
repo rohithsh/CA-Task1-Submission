@@ -37,7 +37,6 @@ def plot_correlation(df):
     cor_df = df.corr()
     sns.lmplot(x='effectiveness_score_mean',y='argument_quality_score_mean',data=df, fit_reg=True)
     plt.title("Correlation b/w effectiveness_score_mean & argument_quality_score_mean")
-    plt.savefig("/Correlation between effectiveness_score_mean & argument_quality_score_mean.png")
     return cor_df
 
 #Plotting Histogram - Statistics
@@ -55,7 +54,6 @@ def plot_histogram(df):
     ax.set_xlabel("issue")
     ax.set_ylabel('count')
     plt.title("No.of argumentative vs non-argumentative texts per argument")
-    plt.savefig("/No.of argumentative vs non-argumentative texts per argument.png")
     plt.show()
     pass
 
