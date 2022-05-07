@@ -1,30 +1,29 @@
 Computational Argumentation 2022 -- Assignment 1
 ================================================
 
-
-This directory presents the main structure we expect you to use for handing in the assignment submission. This file describes the expected usage of the main Python file and the usage of the docker image.
+This file describes the expected usage of the main Python file and description of the statistics.
 
 
 ## Python file
-To make the correction of your assignments easier, please use the provided `main.py` Python file. We will execute the `main.py` when correcting your submission. Also, make sure that all of your code is executed by the `main()` function in the file. You are, of course, free to add more functions and imports if required.
+The main.py file contains our source code.
+The file has several functions and all the functions are called in the main method. 
+The program does following tasks - 
+1. Read csv file present in "data" folder.
+2. Transforming data 
+3. Extracting only arguementative records from the data.
+4. Splitting data into Train, Test and Validate sets in 70:20:10 ratio respectively.
+5. Writing the combined arguements and splitted data into CombinedArguements.json, Train.json, Test.json, Validate.json respectively.
+6. Computing and plotting statistics(Description of statistics below)
 
+## Statistics Description
 
-## Docker image
-To have a unified execution environment for you and us, we also provide a publicly available docker container to execute your submissions in. Please also use this container to run and test your code if possible. Follow the official instructions to set up Docker on your machine [^1]. Below are some useful commands (if you are using Windows, you might need to adapt those commands slightly, but the flags should stay mostly the same).
+The statistics are computed taking non-arguementative records into account.
 
-1. Running the `main.py` file inside the container.
-    ```shell
-    $ docker run --mount type=bind,src="$(pwd)",dst=/mnt -it registry.webis.de/code-lib/public-images/upb-ca22:1.0 sh -c 'python /mnt/main.py'
-    ```
-2. Installing pip packages inside the container.
-    ```shell
-    $ docker run --mount type=bind,src="$(pwd)",dst=/mnt -it registry.webis.de/code-lib/public-images/upb-ca22:1.0 sh -c 'pip install scikit-learn'
-    ```
-3. Running a jupyter notebook inside the container that is accessible from your browser.
-    ```shell
-    $ docker run -p 8888:8888 --mount type=bind,src="$(pwd)",dst=/mnt -it registry.webis.de/code-lib/public-images/upb-ca22:1.0 sh -c 'jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --notebook-dir=/mnt'
-    ```
+1. Corelation between argument_quality_score and effectiveness_score -
+We took mean of arguement_quality_score and effectiveness_score, and plotted a scatter plot between them. 
+We found out that there is a strong co-relation between them(co-relation score - 0.89). We can say thar if the arguement quality is high we can assume that effectiveness score is also high and vice-versa.
 
+2. Histogram plotted for number of arguementative and non-arguementative annotations per issue - 
+We are interested to look at how many records are marked arguementative or non-arguementative per issue by the annotators.
+We observe that the number of non-arguementative records are pretty less as compared to the number of arguementative records and thus we have more data per issue to calculate the effectiveness and quality score.
 
-
-[^1]: https://docs.docker.com/engine/install/
