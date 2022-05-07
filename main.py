@@ -36,12 +36,14 @@ def plot_correlation(df):
     df["argument_quality_score_mean"] = df["effectiveness_score"].apply(np.mean)
     cor_df = df.corr()
     sns.lmplot(x='effectiveness_score_mean',y='argument_quality_score_mean',data=df, fit_reg=True)
+    plt.title("Correlation b/w effectiveness_score_mean & argument_quality_score_mean")
+    plt.savefig("/Correlation between effectiveness_score_mean & argument_quality_score_mean.png")
     return cor_df
 
 #Plotting Histogram - Statistics
 def plot_histogram(df):
     df_count = df[["issue", "argumentative"]].groupby("issue")[["issue", "argumentative"]].apply(lambda x: x)
-    df_count_pivot = df.pivot_table(index='issue', columns='argumentative', aggfunc='size', fill_value=0)
+    df_pivot = df_count.pivot_table(index='issue', columns='argumentative', aggfunc='size', fill_value=0)
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax2 = ax.twinx()
@@ -52,8 +54,9 @@ def plot_histogram(df):
     plt.xticks(np.arange(16), x_labs)
     ax.set_xlabel("issue")
     ax.set_ylabel('count')
+    plt.title("No.of argumentative vs non-argumentative texts per argument")
+    plt.savefig("/No.of argumentative vs non-argumentative texts per argument.png")
     plt.show()
-    
     pass
 
 def main():
@@ -67,7 +70,7 @@ def main():
     #Choosing the necessary columns from the provided csv file
     df = df[["#id", "annotator", "issue", "stance", "argumentative", "overall quality", "effectiveness", "argument"]]
 
-    #Transformed data with non-arguementative records to be used for statistics 
+    #Transformed data with non-arguementative records to be used for statistics
     df_transformed = data_transformation(df)
 
     #Removing non-arguementative records
@@ -96,7 +99,7 @@ def main():
     #Statistics are computed considering non - arguementative records as well
     #Computing and plotting the graphs for the two statistics mentioned in the 'Readme' file
     plot_correlation(df_transformed)
-    plot_histogram(df_transformed)
+    plot_histogram(df)
 
 
     pass
